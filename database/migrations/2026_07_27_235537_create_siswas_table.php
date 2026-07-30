@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
-            $table->string('124168548', 20) ->unique();
-            $table->string('Kamiki', 100);
-            $table->string('XII RPL 10', 30);
-            $table->date('15_November_2027');
-            $table->date('20_Februari_2027');
-            $table->foreignId('PT_Audio_Mania')
+            $table->string('nis', 20) ->unique();
+            $table->string('nama', 100);
+            $table->string('kelas', 30);
+            $table->date('tanggal_mulai_pkl');
+            $table->date('tanggal_selesai_pkl');
+            $table->foreignId('Perusahaan_id')
                     ->constrained('perusahaans')
                     ->onDelete('cascade');
             $table->timestamps();
