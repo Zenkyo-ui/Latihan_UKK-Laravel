@@ -17,4 +17,12 @@ class siswa extends Model
     {
         return $this->belongsTo(Perusahaan::class);
     }
+
+    public function kompetensi() 
+{
+    return $this->belongsToMany(
+        Kompetensi::class,
+        'siswa_kompetensi'
+    )->withPivot('nilai');
+}
 }
