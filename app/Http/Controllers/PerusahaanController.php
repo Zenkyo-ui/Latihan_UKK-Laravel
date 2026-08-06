@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\perusahaan;
 use Illuminate\Http\Request;
 
 class PerusahaanController extends Controller
 {
     public function index()
- {
- return 'Menampilkan daftar perusahaan mitra PKL dari controller';
- }
- public function show($id)
- {
- return 'Menampilkan detail perusahaan dengan ID: ' . $id;
- }
+    {
+        $perusahaanList = perusahaan::all();
+
+        return view('perusahaan.index', compact('perusahaanList'));
+    }
+
+    public function show($id)
+    {
+        $perusahaan = perusahaan::findOrFail($id);
+
+        return view('perusahaan.show', compact('perusahaan'));
+    }
 }

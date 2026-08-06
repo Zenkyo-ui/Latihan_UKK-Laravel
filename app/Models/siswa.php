@@ -13,9 +13,9 @@ class siswa extends Model
  'tanggal_selesai_pkl', 'perusahaan_id', 'tanggal_mulai_pkl', 'tanggal_selesai_pkl',
  ];
  
- public function perusahaan()
+    public function perusahaan()
     {
-        return $this->belongsTo(Perusahaan::class);
+        return $this->belongsTo(Perusahaan::class, 'Perusahaan_id');
     }
 
     public function kompetensi() 
