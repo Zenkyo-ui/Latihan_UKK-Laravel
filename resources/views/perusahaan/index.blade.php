@@ -4,9 +4,13 @@
 
 @section('content')
     <h1>Daftar Perusahaan Mitra</h1>
-    <p>Halaman ini menampilkan daftar perusahaan mitra yang bekerja sama dengan SMK untuk program PKL. Silakan pilih perusahaan yang sesuai untuk informasi lebih lanjut.</p>
+    <p class="subjudul">Daftar perusahaan yang bekerja sama dengan SMK untuk program PKL. Gunakan pencarian atau klik tombol Detail untuk info lebih lanjut.</p>
 
-    <table border="1" cellpadding="8" cellspacing="0">
+    <div class="toolbar">
+        <input type="text" id="cari" class="cari" placeholder="Cari nama / bidang usaha..." onkeyup="filterTabel()">
+    </div>
+
+    <table id="tabel">
         <thead>
             <tr>
                 <th>No</th>
@@ -14,28 +18,36 @@
                 <th>Bidang Usaha</th>
                 <th>Alamat</th>
                 <th>Pembimbing Industri</th>
-                <th>Telepon</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($perusahaanList as $perusahaan)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>
-                        <a href="{{ route('perusahaan.show', $perusahaan->id) }}">
-                            {{ $perusahaan->nama_perusahaan }}
-                        </a>
-                    </td>
+                    <td>{{ $perusahaan->nama_perusahaan }}</td>
                     <td>{{ $perusahaan->bidang_usaha }}</td>
                     <td>{{ $perusahaan->alamat }}</td>
                     <td>{{ $perusahaan->nama_pembimbing_industri }}</td>
-                    <td>{{ $perusahaan->telepon }}</td>
+                    <td>
+                        <a href="{{ route('perusahaan.show', $perusahaan->id) }}" class="btn btn-primary btn-sm">Detail</a>
+                    </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6">Belum ada data perusahaan mitra.</td>
+                    <td colspan="6" class="kosong">Belum ada data perusahaan mitra.</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
+
+    <script>
+        function filterTabel() {
+            const keyword = document.getElementById('cari').value.toLowerCase();
+            const rows = document.querySelectorAll('#tabel tbody tr');
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(keyword) ? '' : 'none';
+            });
+        }
+    </script>
 @endsection

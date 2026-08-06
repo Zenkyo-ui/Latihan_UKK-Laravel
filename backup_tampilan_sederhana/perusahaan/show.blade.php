@@ -4,9 +4,8 @@
 
 @section('content')
     <h1>{{ $perusahaan->nama_perusahaan }}</h1>
-    <p class="subjudul">Informasi lengkap perusahaan mitra PKL.</p>
 
-    <table>
+    <table border="1" cellpadding="8" cellspacing="0">
         <tr>
             <th>Bidang Usaha</th>
             <td>{{ $perusahaan->bidang_usaha }}</td>
@@ -25,7 +24,7 @@
         </tr>
     </table>
 
-    <p style="margin-top: 20px;">
-        <a href="{{ route('perusahaan.index') }}" class="btn btn-secondary">&laquo; Kembali ke Daftar</a>
+    <p>
+        <a href="{{ route('perusahaan.index') }}">&laquo; Kembali ke daftar perusahaan</a>
     </p>
 @endsection

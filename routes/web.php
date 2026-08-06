@@ -16,9 +16,7 @@ use App\Http\Controllers\SiswaController;
 |
 */
 
-Route::get('/', function () {
-    return 'Selamat datang di Sistem E-PKL';
-});
+Route::view('/', 'home')->name('home');
 
 Route::get('/tentang', function () {
     return 'Halaman ini berisi informasi tentang modul E-PKL sekolah.';

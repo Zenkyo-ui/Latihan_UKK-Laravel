@@ -4,9 +4,8 @@
 
 @section('content')
     <h1>{{ $siswa->nama }}</h1>
-    <p class="subjudul">Informasi lengkap siswa yang melaksanakan PKL.</p>
 
-    <table>
+    <table border="1" cellpadding="8" cellspacing="0">
         <tr>
             <th>NIS</th>
             <td>{{ $siswa->nis }}</td>
@@ -29,7 +28,7 @@
         </tr>
     </table>
 
-    <p style="margin-top: 20px;">
-        <a href="{{ route('siswa.index') }}" class="btn btn-secondary">&laquo; Kembali ke Daftar</a>
+    <p>
+        <a href="{{ route('siswa.index') }}">&laquo; Kembali ke daftar siswa</a>
     </p>
 @endsection
