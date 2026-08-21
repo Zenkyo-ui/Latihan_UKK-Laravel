@@ -10,11 +10,11 @@ class perusahaan extends Model
     use HasFactory;
     protected $fillable = [
         'nama_perusahaan', 'bidang_usaha', 'alamat',
-        'nama_pembimbing_industri', 'telepon',
+        'nama_pembimbing_industri', 'telepon', 'kuota',
     ];
 
     public function siswa()
     {
-        return $this->hasMany(Siswa::class);
+        return $this->hasMany(Siswa::class, 'Perusahaan_id');
     }
 }

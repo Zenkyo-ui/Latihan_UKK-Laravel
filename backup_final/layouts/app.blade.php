@@ -109,30 +109,6 @@
         .empty-state { text-align: center; padding: 48px 24px; color: var(--gray-400); }
         .empty-state p { font-size: 0.9rem; }
 
-        /* FORM */
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .form-group { margin-bottom: 16px; }
-        .form-group.full { grid-column: 1 / -1; }
-        .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--gray-600); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.03em; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 10px 12px; border: 1px solid var(--gray-300); border-radius: var(--radius);
-            font-size: 0.9rem; transition: all 0.2s; background: white;
-        }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light);
-        }
-        .form-group .error { color: var(--danger); font-size: 0.8rem; margin-top: 4px; }
-        .form-group input.is-invalid, .form-group select.is-invalid { border-color: var(--danger); }
-        .form-actions { display: flex; gap: 12px; margin-top: 24px; }
-
-        /* ALERT */
-        .alert { padding: 12px 16px; border-radius: var(--radius); margin-bottom: 20px; font-size: 0.9rem; font-weight: 500; }
-        .alert-success { background: var(--success-light); color: var(--success); border: 1px solid #a7f3d0; }
-
-        /* DELETE FORM */
-        .btn-delete { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 0.8rem; font-weight: 500; padding: 6px 12px; border-radius: var(--radius); transition: all 0.2s; }
-        .btn-delete:hover { background: var(--danger-light); }
-
         /* FOOTER */
         footer { margin-top: 48px; padding: 20px 24px; border-top: 1px solid var(--gray-200); color: var(--gray-400); text-align: center; font-size: 0.8rem; }
 

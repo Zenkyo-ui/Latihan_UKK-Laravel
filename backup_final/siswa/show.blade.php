@@ -3,19 +3,9 @@
 @section('title', $siswa->nama)
 
 @section('content')
-    <div class="page-header" style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 12px;">
-        <div>
-            <h1>{{ $siswa->nama }}</h1>
-            <p class="subtitle">Detail data siswa PKL</p>
-        </div>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <a href="{{ route('siswa.edit', $siswa->nis) }}" class="btn btn-secondary">Edit</a>
-            <form method="POST" action="{{ route('siswa.destroy', $siswa->nis) }}" onsubmit="return confirm('Yakin hapus siswa ini?')">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn-delete" style="padding: 10px 18px; border: 1px solid var(--danger); border-radius: var(--radius);">Hapus</button>
-            </form>
-        </div>
+    <div class="page-header">
+        <h1>{{ $siswa->nama }}</h1>
+        <p class="subtitle">Detail data siswa PKL</p>
     </div>
 
     <div class="card">

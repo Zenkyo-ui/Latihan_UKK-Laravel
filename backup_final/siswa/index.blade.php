@@ -3,17 +3,10 @@
 @section('title', 'Data Siswa')
 
 @section('content')
-    <div class="page-header" style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 12px;">
-        <div>
-            <h1>Data Siswa PKL</h1>
-            <p class="subtitle">{{ $siswaList->count() }} siswa terdaftar dalam program PKL.</p>
-        </div>
-        <a href="{{ route('siswa.create') }}" class="btn btn-primary">+ Tambah</a>
+    <div class="page-header">
+        <h1>Data Siswa PKL</h1>
+        <p class="subtitle">{{ $siswaList->count() }} siswa terdaftar dalam program PKL.</p>
     </div>
-
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
 
     <div class="card">
         <div class="card-header">
@@ -33,7 +26,7 @@
                         <th>Perusahaan</th>
                         <th>Mulai</th>
                         <th>Selesai</th>
-                        <th style="width:180px">Aksi</th>
+                        <th style="width:90px">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,14 +45,8 @@
                             </td>
                             <td>{{ $siswa->tanggal_mulai_pkl }}</td>
                             <td>{{ $siswa->tanggal_selesai_pkl }}</td>
-                            <td style="display: flex; gap: 4px; flex-wrap: wrap;">
-                                <a href="{{ route('siswa.show', $siswa->nis) }}" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.75rem;">Detail</a>
-                                <a href="{{ route('siswa.edit', $siswa->nis) }}" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.75rem;">Edit</a>
-                                <form method="POST" action="{{ route('siswa.destroy', $siswa->nis) }}" onsubmit="return confirm('Yakin hapus siswa ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn-delete">Hapus</button>
-                                </form>
+                            <td>
+                                <a href="{{ route('siswa.show', $siswa->nis) }}" class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem;">Detail</a>
                             </td>
                         </tr>
                     @empty

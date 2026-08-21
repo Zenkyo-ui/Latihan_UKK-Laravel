@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\SiswaController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,18 +15,22 @@ use App\Http\Controllers\SiswaController;
 |
 */
 
-Route::view('/', 'home')->name('home');
+// HOME
+Route::get('/', function () {
+    $totalSiswa = \App\Models\siswa::count();
+    $totalPerusahaan = \App\Models\perusahaan::count();
+    $siswaAktif = \App\Models\siswa::whereHas('perusahaan')->count();
+    return view('home', compact('totalSiswa', 'totalPerusahaan', 'siswaAktif'));
+})->name('home');
 
-Route::get('/tentang', function () {
-    return 'Halaman ini berisi informasi tentang modul E-PKL sekolah.';
+Route::get('/up', function () {
+    return true;
 });
 
-Route::get('/kontak', function () {
-    return 'Hubungi guru pembimbing PKL di ruang RPL.';
-});
+// PERUSAHAAN
+Route::resource('perusahaan', PerusahaanController::class);
 
-Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
-Route::get('/siswa/{nis}', [SiswaController::class, 'show'])->name('siswa.show');
-
-Route::get('/perusahaan', [PerusahaanController::class, 'index'])->name('perusahaan.index');
-Route::get('/perusahaan/{id}', [PerusahaanController::class, 'show'])->name('perusahaan.show');
+// SISWA
+Route::resource('siswa', SiswaController::class)->parameters([
+    'siswa' => 'nis',
+]);

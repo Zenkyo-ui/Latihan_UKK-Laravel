@@ -3,19 +3,9 @@
 @section('title', $perusahaan->nama_perusahaan)
 
 @section('content')
-    <div class="page-header" style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 12px;">
-        <div>
-            <h1>{{ $perusahaan->nama_perusahaan }}</h1>
-            <p class="subtitle">Detail perusahaan mitra PKL</p>
-        </div>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <a href="{{ route('perusahaan.edit', $perusahaan->id) }}" class="btn btn-secondary">Edit</a>
-            <form method="POST" action="{{ route('perusahaan.destroy', $perusahaan->id) }}" onsubmit="return confirm('Yakin hapus perusahaan ini? Semua siswa terkait juga akan terhapus.')">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn-delete" style="padding: 10px 18px; border: 1px solid var(--danger); border-radius: var(--radius);">Hapus</button>
-            </form>
-        </div>
+    <div class="page-header">
+        <h1>{{ $perusahaan->nama_perusahaan }}</h1>
+        <p class="subtitle">Detail perusahaan mitra PKL</p>
     </div>
 
     @php

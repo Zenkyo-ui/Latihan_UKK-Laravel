@@ -3,17 +3,10 @@
 @section('title', 'Data Perusahaan')
 
 @section('content')
-    <div class="page-header" style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 12px;">
-        <div>
-            <h1>Data Perusahaan Mitra</h1>
-            <p class="subtitle">{{ $perusahaanList->count() }} perusahaan terdaftar sebagai mitra PKL.</p>
-        </div>
-        <a href="{{ route('perusahaan.create') }}" class="btn btn-primary">+ Tambah</a>
+    <div class="page-header">
+        <h1>Data Perusahaan Mitra</h1>
+        <p class="subtitle">{{ $perusahaanList->count() }} perusahaan terdaftar sebagai mitra PKL.</p>
     </div>
-
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
 
     <div class="card">
         <div class="card-header">
@@ -33,7 +26,7 @@
                         <th>Pembimbing</th>
                         <th>Kuota</th>
                         <th>Sisa</th>
-                        <th style="width:180px">Aksi</th>
+                        <th style="width:90px">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,14 +49,8 @@
                                     <span class="badge badge-success">{{ $sisa }}</span>
                                 @endif
                             </td>
-                            <td style="display: flex; gap: 4px; flex-wrap: wrap;">
-                                <a href="{{ route('perusahaan.show', $perusahaan->id) }}" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.75rem;">Detail</a>
-                                <a href="{{ route('perusahaan.edit', $perusahaan->id) }}" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.75rem;">Edit</a>
-                                <form method="POST" action="{{ route('perusahaan.destroy', $perusahaan->id) }}" onsubmit="return confirm('Yakin hapus perusahaan ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn-delete">Hapus</button>
-                                </form>
+                            <td>
+                                <a href="{{ route('perusahaan.show', $perusahaan->id) }}" class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem;">Detail</a>
                             </td>
                         </tr>
                     @empty

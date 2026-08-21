@@ -17,12 +17,14 @@ class PerusahaanSeeder extends Seeder
  'bidang_usaha' => 'Software House',
  'alamat' => 'Jl. Soekarno Hatta No. 10, Bandung',
  'nama_pembimbing_industri' => 'Andi Saputra',
+ 'kuota' => 40,
  ],
  [
  'nama_perusahaan' => 'CV Karya Teknologi',
  'bidang_usaha' => 'Jaringan & Infrastruktur IT',
  'alamat' => 'Jl. Soreang-Banjaran No. 25, Kab. Bandung',
  'nama_pembimbing_industri' => 'Siti Amelia',
+ 'kuota' => 5,
  ],
  ];
  foreach ($data as $item) {
