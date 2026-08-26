@@ -2,21 +2,34 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+/**
+ * DATABASE SEEDER (PARENT)
+ * =========================
+ * Ini adalah "pangkalan" seeder. Semua seeder lain dipanggil dari sini.
+ *
+ * CARA JALANIN:
+ *   php artisan db:seed            ← jalankan semua seeder
+ *   php artisan migrate:fresh --seed ← buat ulang tabel + isi data
+ *
+ * URUTAN PENTING:
+ *   1. PerusahaanSeeder    ← duluan (karena siswa butuh perusahaan_id)
+ *   2. KompetensiSeeder    ← duluan (karena siswa butuh kompetensi_id)
+ *   3. SiswaSeeder         ← terakhir (pakai ID dari perusahaan + kompetensi)
+ */
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * $this->call() = jalankan seeder-seeder secara berurutan.
+     * Urutan di sini menentukan seeder mana yang jalan duluan.
      */
     public function run(): void
     {
         $this->call([
- PerusahaanSeeder::class,
- KompetensiSeeder::class,
- SiswaSeeder::class,
- ]);
-
+            PerusahaanSeeder::class,   // 1. Isi data perusahaan
+            KompetensiSeeder::class,   // 2. Isi data kompetensi
+            SiswaSeeder::class,        // 3. Isi data siswa (butuh ID perusahaan + kompetensi)
+        ]);
     }
 }

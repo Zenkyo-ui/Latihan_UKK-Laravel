@@ -4,24 +4,26 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * MIGRATION: BUAT TABEL KOMPETENSI
+ * ===================================
+ * Tabel ini menyimpan daftar bidang keahlian (PPLG, TKJ, MM, dll).
+ *
+ * STRUKTUR TABEL:
+ * | id | nama_kompetensi | deskripsi | created_at | updated_at |
+ */
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('kompetensis', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kompetensi', 100);
-            $table->text('deskripsi')->nullable();
+            $table->string('nama_kompetensi', 100);   // Contoh: "PPLG", "TKJ"
+            $table->text('deskripsi')->nullable();     // Deskripsi, boleh kosong
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('kompetensis');
