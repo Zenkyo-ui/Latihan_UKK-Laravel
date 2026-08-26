@@ -34,12 +34,24 @@
                         <select name="perusahaan_id" id="perusahaan_id" class="{{ $errors->has('perusahaan_id') ? 'is-invalid' : '' }}" required>
                             <option value="">-- Pilih Perusahaan --</option>
                             @foreach ($perusahaanList as $p)
-                                <option value="{{ $p->id }}" {{ old('perusahaan_id', $siswa->Perusahaan_id) == $p->id ? 'selected' : '' }}>
+                                <option value="{{ $p->id }}" {{ old('perusahaan_id', $siswa->perusahaan_id) == $p->id ? 'selected' : '' }}>
                                     {{ $p->nama_perusahaan }}
                                 </option>
                             @endforeach
                         </select>
                         @error('perusahaan_id') <div class="error">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="kompetensi_id">Bidang Keahlian</label>
+                        <select name="kompetensi_id" id="kompetensi_id" class="{{ $errors->has('kompetensi_id') ? 'is-invalid' : '' }}" required>
+                            <option value="">-- Pilih Kompetensi --</option>
+                            @foreach ($kompetensiList as $k)
+                                <option value="{{ $k->id }}" {{ old('kompetensi_id', $siswa->kompetensi_id) == $k->id ? 'selected' : '' }}>
+                                    {{ $k->nama_kompetensi }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('kompetensi_id') <div class="error">{{ $message }}</div> @enderror
                     </div>
                     <div class="form-group">
                         <label for="tanggal_mulai_pkl">Mulai PKL</label>

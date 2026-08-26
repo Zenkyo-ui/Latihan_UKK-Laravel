@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\perusahaan;
+use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 
 class PerusahaanController extends Controller
 {
     public function index()
     {
-        $perusahaanList = perusahaan::withCount('siswa')->get();
+        $perusahaanList = Perusahaan::withCount('siswa')->get();
 
         return view('perusahaan.index', compact('perusahaanList'));
     }
@@ -30,28 +30,28 @@ class PerusahaanController extends Controller
             'kuota' => 'required|integer|min:1',
         ]);
 
-        perusahaan::create($validated);
+        Perusahaan::create($validated);
 
         return redirect()->route('perusahaan.index')->with('success', 'Perusahaan berhasil ditambahkan.');
     }
 
     public function show($id)
     {
-        $perusahaan = perusahaan::withCount('siswa')->with('siswa')->findOrFail($id);
+        $perusahaan = Perusahaan::withCount('siswa')->with('siswa')->findOrFail($id);
 
         return view('perusahaan.show', compact('perusahaan'));
     }
 
     public function edit($id)
     {
-        $perusahaan = perusahaan::findOrFail($id);
+        $perusahaan = Perusahaan::findOrFail($id);
 
         return view('perusahaan.edit', compact('perusahaan'));
     }
 
     public function update(Request $request, $id)
     {
-        $perusahaan = perusahaan::findOrFail($id);
+        $perusahaan = Perusahaan::findOrFail($id);
 
         $validated = $request->validate([
             'nama_perusahaan' => 'required|max:100',
@@ -69,7 +69,7 @@ class PerusahaanController extends Controller
 
     public function destroy($id)
     {
-        $perusahaan = perusahaan::findOrFail($id);
+        $perusahaan = Perusahaan::findOrFail($id);
         $perusahaan->delete();
 
         return redirect()->route('perusahaan.index')->with('success', 'Perusahaan berhasil dihapus.');

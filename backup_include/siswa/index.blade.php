@@ -11,7 +11,9 @@
         <a href="{{ route('siswa.create') }}" class="btn btn-primary">+ Tambah</a>
     </div>
 
-    @include('partials.alert')
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
     <div class="card">
         <div class="card-header">
@@ -29,7 +31,6 @@
                         <th data-sort="nama">Nama</th>
                         <th data-sort="kelas">Kelas</th>
                         <th>Perusahaan</th>
-                        <th>Kompetensi</th>
                         <th>Mulai</th>
                         <th>Selesai</th>
                         <th style="width:180px">Aksi</th>
@@ -49,13 +50,6 @@
                                     <span class="badge badge-warning">Belum ditugaskan</span>
                                 @endif
                             </td>
-                            <td>
-                                @if ($siswa->kompetensi)
-                                    <span class="badge badge-success">{{ $siswa->kompetensi->nama_kompetensi }}</span>
-                                @else
-                                    <span class="badge badge-warning">-</span>
-                                @endif
-                            </td>
                             <td>{{ $siswa->tanggal_mulai_pkl }}</td>
                             <td>{{ $siswa->tanggal_selesai_pkl }}</td>
                             <td style="display: flex; gap: 4px; flex-wrap: wrap;">
@@ -69,7 +63,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="9" class="empty-state">Belum ada data siswa.</td></tr>
+                        <tr><td colspan="8" class="empty-state">Belum ada data siswa.</td></tr>
                     @endforelse
                 </tbody>
             </table>

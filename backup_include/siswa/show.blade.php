@@ -40,16 +40,6 @@
                     </dd>
                 </div>
                 <div class="detail-item">
-                    <dt>Bidang Keahlian</dt>
-                    <dd>
-                        @if ($siswa->kompetensi)
-                            <span class="badge badge-success">{{ $siswa->kompetensi->nama_kompetensi }}</span>
-                        @else
-                            <span class="badge badge-warning">Belum ditentukan</span>
-                        @endif
-                    </dd>
-                </div>
-                <div class="detail-item">
                     <dt>Mulai PKL</dt>
                     <dd>{{ $siswa->tanggal_mulai_pkl }}</dd>
                 </div>

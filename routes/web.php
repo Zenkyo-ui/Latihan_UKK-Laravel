@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\KompetensiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +18,11 @@ use App\Http\Controllers\SiswaController;
 
 // HOME
 Route::get('/', function () {
-    $totalSiswa = \App\Models\siswa::count();
-    $totalPerusahaan = \App\Models\perusahaan::count();
-    $siswaAktif = \App\Models\siswa::whereHas('perusahaan')->count();
-    return view('home', compact('totalSiswa', 'totalPerusahaan', 'siswaAktif'));
+    $totalSiswa = \App\Models\Siswa::count();
+    $totalPerusahaan = \App\Models\Perusahaan::count();
+    $siswaAktif = \App\Models\Siswa::whereHas('perusahaan')->count();
+    $totalKompetensi = \App\Models\Kompetensi::count();
+    return view('home', compact('totalSiswa', 'totalPerusahaan', 'siswaAktif', 'totalKompetensi'));
 })->name('home');
 
 Route::get('/up', function () {
@@ -34,3 +36,6 @@ Route::resource('perusahaan', PerusahaanController::class);
 Route::resource('siswa', SiswaController::class)->parameters([
     'siswa' => 'nis',
 ]);
+
+// KOMPETENSI
+Route::resource('kompetensi', KompetensiController::class);

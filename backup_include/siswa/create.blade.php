@@ -41,18 +41,6 @@
                         @error('perusahaan_id') <div class="error">{{ $message }}</div> @enderror
                     </div>
                     <div class="form-group">
-                        <label for="kompetensi_id">Bidang Keahlian</label>
-                        <select name="kompetensi_id" id="kompetensi_id" class="{{ $errors->has('kompetensi_id') ? 'is-invalid' : '' }}" required>
-                            <option value="">-- Pilih Kompetensi --</option>
-                            @foreach ($kompetensiList as $k)
-                                <option value="{{ $k->id }}" {{ old('kompetensi_id') == $k->id ? 'selected' : '' }}>
-                                    {{ $k->nama_kompetensi }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('kompetensi_id') <div class="error">{{ $message }}</div> @enderror
-                    </div>
-                    <div class="form-group">
                         <label for="tanggal_mulai_pkl">Mulai PKL</label>
                         <input type="date" name="tanggal_mulai_pkl" id="tanggal_mulai_pkl" value="{{ old('tanggal_mulai_pkl') }}" class="{{ $errors->has('tanggal_mulai_pkl') ? 'is-invalid' : '' }}" required>
                         @error('tanggal_mulai_pkl') <div class="error">{{ $message }}</div> @enderror

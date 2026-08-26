@@ -21,10 +21,6 @@
             <div class="stat-label">Sedang PKL</div>
             <div class="stat-value">{{ $siswaAktif }}</div>
         </div>
-        <div class="stat-card">
-            <div class="stat-label">Kompetensi IT</div>
-            <div class="stat-value">{{ $totalKompetensi }}</div>
-        </div>
     </div>
 
     <div class="home-grid">
@@ -38,12 +34,6 @@
             <div class="home-card-icon">🏢</div>
             <h2>Data Perusahaan</h2>
             <p>Daftar perusahaan mitra beserta kuota, alamat, dan data kontak pembimbing industri.</p>
-        </a>
-
-        <a href="{{ route('kompetensi.index') }}" class="home-card">
-            <div class="home-card-icon">💻</div>
-            <h2>Kompetensi IT</h2>
-            <p>Daftar kompetensi yang dipelajari siswa selama PKL, seperti web, database, jaringan, dan lainnya.</p>
         </a>
     </div>
 @endsection

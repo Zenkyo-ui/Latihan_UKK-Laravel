@@ -151,11 +151,22 @@
 </head>
 <body>
 
-    @include('partials.navbar')
+    <nav>
+        <a href="{{ route('home') }}" class="brand">
+            <span class="brand-icon">E</span>
+            E-PKL RPL
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a></li>
+            <li><a href="{{ route('siswa.index') }}" class="{{ request()->routeIs('siswa.*') ? 'active' : '' }}">Siswa</a></li>
+            <li><a href="{{ route('perusahaan.index') }}" class="{{ request()->routeIs('perusahaan.*') ? 'active' : '' }}">Perusahaan</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+    </nav>
 
     <main>@yield('content')</main>
 
-    @include('partials.footer')
+    <footer>&copy; {{ date('Y') }} SMK RPL — Sistem Informasi PKL</footer>
 
     <script>
         document.getElementById('navToggle')?.addEventListener('click', () => {
@@ -175,7 +186,6 @@
         }
         setupSearch('cariPerusahaan', 'tabelPerusahaan');
         setupSearch('cariSiswa', 'tabelSiswa');
-        setupSearch('cariKompetensi', 'tabelKompetensi');
 
         // Sorting
         document.querySelectorAll('th[data-sort]').forEach(th => {
