@@ -11,11 +11,23 @@ class SiswaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * DATA DUMMY:
+     * - 4 siswa lama (22231001 - 22231004)
+     * - 6 siswa BARU (22231005 - 22231010) + 3 perusahaan baru
+     *
+     * CATATAN PENTING:
+     * Pakai updateOrCreate berdasarkan 'nis' supaya seeder aman dijalankan
+     * berkali-kali (tidak bikin duplikat NIS), dan tidak bentrok dengan
+     * siswa yang sudah dimasukkan manual.
      */
     public function run(): void
     {
         $perusahaan1 = Perusahaan::where('nama_perusahaan', 'PT Sinergi Digital Nusantara')->first();
         $perusahaan2 = Perusahaan::where('nama_perusahaan', 'CV Karya Teknologi')->first();
+        $perusahaan3 = Perusahaan::where('nama_perusahaan', 'PT Nusantara Software')->first();
+        $perusahaan4 = Perusahaan::where('nama_perusahaan', 'PT Telekomunikasi Jaringan Nusantara')->first();
+        $perusahaan5 = Perusahaan::where('nama_perusahaan', 'CV Digital Media Kreatif')->first();
 
         $pplg = Kompetensi::where('nama_kompetensi', 'PPLG')->first();
         $tkj = Kompetensi::where('nama_kompetensi', 'TKJ')->first();
@@ -23,6 +35,7 @@ class SiswaSeeder extends Seeder
         $rpl = Kompetensi::where('nama_kompetensi', 'RPL')->first();
 
         $data = [
+            // ===== 4 SISWA LAMA =====
             [
                 'nis' => '22231001',
                 'nama' => 'Ahmad Rizky',
@@ -59,10 +72,71 @@ class SiswaSeeder extends Seeder
                 'tanggal_mulai_pkl' => '2026-08-01',
                 'tanggal_selesai_pkl' => '2027-01-31',
             ],
+
+            // ===== 6 SISWA BARU (data dummy) =====
+            [
+                'nis' => '22231005',
+                'nama' => 'Putra Pratama',
+                'kelas' => 'XII RPL 1',
+                'perusahaan_id' => $perusahaan3?->id ?? 3,
+                'kompetensi_id' => $rpl?->id ?? 2,
+                'tanggal_mulai_pkl' => '2026-07-15',
+                'tanggal_selesai_pkl' => '2026-12-15',
+            ],
+            [
+                'nis' => '22231006',
+                'nama' => 'Dewi Sartika',
+                'kelas' => 'XII RPL 2',
+                'perusahaan_id' => $perusahaan3?->id ?? 3,
+                'kompetensi_id' => $pplg?->id ?? 1,
+                'tanggal_mulai_pkl' => '2026-07-15',
+                'tanggal_selesai_pkl' => '2026-12-15',
+            ],
+            [
+                'nis' => '22231007',
+                'nama' => 'Rizki Ramadhan',
+                'kelas' => 'XII TKJ 1',
+                'perusahaan_id' => $perusahaan4?->id ?? 4,
+                'kompetensi_id' => $tkj?->id ?? 3,
+                'tanggal_mulai_pkl' => '2026-08-01',
+                'tanggal_selesai_pkl' => '2027-01-31',
+            ],
+            [
+                'nis' => '22231008',
+                'nama' => 'Intan Permata',
+                'kelas' => 'XII MM 1',
+                'perusahaan_id' => $perusahaan5?->id ?? 5,
+                'kompetensi_id' => $mm?->id ?? 4,
+                'tanggal_mulai_pkl' => '2026-07-01',
+                'tanggal_selesai_pkl' => '2026-12-31',
+            ],
+            [
+                'nis' => '22231009',
+                'nama' => 'Bayu Aji',
+                'kelas' => 'XII RPL 3',
+                'perusahaan_id' => $perusahaan3?->id ?? 3,
+                'kompetensi_id' => $pplg?->id ?? 1,
+                'tanggal_mulai_pkl' => '2026-08-10',
+                'tanggal_selesai_pkl' => '2027-02-10',
+            ],
+            [
+                'nis' => '22231010',
+                'nama' => 'Salsa Nurfadilah',
+                'kelas' => 'XII TKJ 2',
+                'perusahaan_id' => $perusahaan4?->id ?? 4,
+                'kompetensi_id' => $tkj?->id ?? 3,
+                'tanggal_mulai_pkl' => '2026-07-20',
+                'tanggal_selesai_pkl' => '2026-12-20',
+            ],
         ];
 
+        // updateOrCreate = kalau NIS sudah ada, UPDATE data; kalau belum, CREATE.
+        // Ini mencegah duplikat & aman dijalankan berkali-kali.
         foreach ($data as $item) {
-            Siswa::create($item);
+            Siswa::updateOrCreate(
+                ['nis' => $item['nis']], // cek berdasarkan NIS
+                $item                   // data yang diisi/diperbarui
+            );
         }
     }
 }

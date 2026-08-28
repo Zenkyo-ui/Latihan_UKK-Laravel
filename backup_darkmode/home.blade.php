@@ -89,7 +89,7 @@
                 </svg>
             </div>
             <h2>Kompetensi IT</h2>
-            <p>Daftar skill bahasa pemrograman yang dikuasai siswa, seperti HTML, CSS, JavaScript, PHP, dan lainnya.</p>
+            <p>Daftar kompetensi yang dipelajari siswa selama PKL, seperti web, database, jaringan, dan lainnya.</p>
         </a>
 
         <a href="{{ route('penilaian.index') }}" class="home-card">

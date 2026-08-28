@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kompetensi;
+use App\Models\Skill;
 use Illuminate\Http\Request;
 
 /**
  * CONTROLLER KOMPETENSI
  * ======================
- * Mengelola CRUD untuk data kompetensi / bidang keahlian.
- * Sama polanya dengan PerusahaanController.
+ * Halaman menu "Kompetensi" sekarang menampilkan DATA SKILL
+ * (kemampuan bahasa pemrograman yang dikuasai siswa: HTML, CSS, JS, dll).
+ *
+ * CATATAN PENTING:
+ * - Nama menu & URL ( /kompetensi ) TETAP, tapi isi datanya dari tabel skill.
+ * - Tabel jurusan (kompetensis: PPLG, TKJ, MM) TETAP ada, tapi hanya
+ *   dipakai untuk dropdown "Jurusan" di form siswa — bukan di sini.
  *
  * ROUTE (dari routes/web.php):
  *   GET    /kompetensi           → index()
@@ -23,18 +28,18 @@ use Illuminate\Http\Request;
 class KompetensiController extends Controller
 {
     /**
-     * INDEX — Daftar semua kompetensi
-     * withCount('siswa') = hitung siswa per kompetensi
+     * INDEX — Daftar semua skill
+     * withCount('siswa') = berapa siswa yang menguasai tiap skill.
      */
     public function index()
     {
-        $kompetensiList = Kompetensi::withCount('siswa')->get();
+        $skillList = Skill::withCount('siswa')->get();
 
-        return view('kompetensi.index', compact('kompetensiList'));
+        return view('kompetensi.index', compact('skillList'));
     }
 
     /**
-     * CREATE — Form kosong untuk tambah kompetensi
+     * CREATE — Form kosong untuk tambah skill
      */
     public function create()
     {
@@ -42,67 +47,68 @@ class KompetensiController extends Controller
     }
 
     /**
-     * STORE — Simpan kompetensi baru
-     * 'nullable' = deskripsi boleh kosong
+     * STORE — Simpan skill baru
+     * 'unique' = nama skill tidak boleh duplikat
      */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_kompetensi' => 'required|max:100',
+            'nama_skill' => 'required|max:100|unique:skills,nama_skill',
             'deskripsi' => 'nullable|max:500',
         ]);
 
-        Kompetensi::create($validated);
+        Skill::create($validated);
 
-        return redirect()->route('kompetensi.index')->with('success', 'Kompetensi berhasil ditambahkan.');
+        return redirect()->route('kompetensi.index')->with('success', 'Skill berhasil ditambahkan.');
     }
 
     /**
-     * SHOW — Detail kompetensi + daftar siswa
-     * with('siswa') = ambil semua siswa di kompetensi ini
+     * SHOW — Detail skill + daftar siswa yang menguasai
      */
     public function show($id)
     {
-        $kompetensi = Kompetensi::withCount('siswa')->with('siswa')->findOrFail($id);
+        $skill = Skill::withCount('siswa')->with('siswa')->findOrFail($id);
 
-        return view('kompetensi.show', compact('kompetensi'));
+        return view('kompetensi.show', compact('skill'));
     }
 
     /**
-     * EDIT — Form edit kompetensi
+     * EDIT — Form edit skill
      */
     public function edit($id)
     {
-        $kompetensi = Kompetensi::findOrFail($id);
+        $skill = Skill::findOrFail($id);
 
-        return view('kompetensi.edit', compact('kompetensi'));
+        return view('kompetensi.edit', compact('skill'));
     }
 
     /**
-     * UPDATE — Simpan perubahan kompetensi
+     * UPDATE — Simpan perubahan skill
+     * Rule 'unique' di-exclude dari ID sendiri supaya tidak bentrok saat edit.
      */
     public function update(Request $request, $id)
     {
-        $kompetensi = Kompetensi::findOrFail($id);
+        $skill = Skill::findOrFail($id);
 
         $validated = $request->validate([
-            'nama_kompetensi' => 'required|max:100',
+            'nama_skill' => 'required|max:100|unique:skills,nama_skill,' . $skill->id,
             'deskripsi' => 'nullable|max:500',
         ]);
 
-        $kompetensi->update($validated);
+        $skill->update($validated);
 
-        return redirect()->route('kompetensi.index')->with('success', 'Kompetensi berhasil diperbarui.');
+        return redirect()->route('kompetensi.index')->with('success', 'Skill berhasil diperbarui.');
     }
 
     /**
-     * DESTROY — Hapus kompetensi
+     * DESTROY — Hapus skill
+     * Relasi pivot (siswa_skill) otomatis ikut terhapus karena onDelete('cascade').
      */
     public function destroy($id)
     {
-        $kompetensi = Kompetensi::findOrFail($id);
-        $kompetensi->delete();
+        $skill = Skill::findOrFail($id);
+        $skill->delete();
 
-        return redirect()->route('kompetensi.index')->with('success', 'Kompetensi berhasil dihapus.');
+        return redirect()->route('kompetensi.index')->with('success', 'Skill berhasil dihapus.');
     }
 }

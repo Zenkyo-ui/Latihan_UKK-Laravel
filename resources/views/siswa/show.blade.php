@@ -40,7 +40,7 @@
                     </dd>
                 </div>
                 <div class="detail-item">
-                    <dt>Bidang Keahlian</dt>
+                    <dt>Jurusan</dt>
                     <dd>
                         @if ($siswa->kompetensi)
                             <span class="badge badge-success">{{ $siswa->kompetensi->nama_kompetensi }}</span>
@@ -58,6 +58,66 @@
                     <dd>{{ $siswa->tanggal_selesai_pkl }}</dd>
                 </div>
             </div>
+
+            <div class="detail-item" style="margin-top: 18px;">
+                <dt>Skill yang Dikuasai ({{ $siswa->skills->count() }})</dt>
+                <dd>
+                    @forelse ($siswa->skills as $skill)
+                        <span class="badge" style="background: var(--primary-light); color: var(--primary-dark);">{{ $skill->nama_skill }}</span>
+                    @empty
+                        <span class="badge badge-warning">Belum ada skill</span>
+                    @endforelse
+                </dd>
+            </div>
+        </div>
+    </div>
+
+    {{-- KARTU PENILAIAN PKL — tempat "Input Nilai" atau ringkasan nilai jika sudah ada --}}
+    {{-- $siswa->penilaian → relasi hasOne: berisi null kalau siswa belum dinilai --}}
+    <div class="card" style="margin-top: 20px;">
+        <div class="card-header">
+            <h2 style="font-size:1.1rem; color: var(--text-strong);">Penilaian PKL</h2>
+            @if ($siswa->penilaian)
+                <a href="{{ route('penilaian.edit', $siswa->penilaian->id) }}" class="btn btn-secondary">Edit Nilai</a>
+            @else
+                <a href="{{ route('penilaian.create', ['siswa_id' => $siswa->id]) }}" class="btn btn-primary">+ Input Nilai</a>
+            @endif
+        </div>
+        <div class="card-body">
+            @if ($siswa->penilaian)
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <dt>Skor</dt>
+                        <dd style="font-size:1.5rem; font-weight:700; color: var(--text-strong);">{{ $siswa->penilaian->skor }}</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>Status Penguasaan</dt>
+                        <dd>
+                            <span class="badge" style="background: var(--primary-light); color: var(--primary-dark);">{{ $siswa->penilaian->status_penguasaan }}</span>
+                        </dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>Keaktifan</dt>
+                        <dd>{{ $siswa->penilaian->keaktifan }}</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>Sikap</dt>
+                        <dd>{{ $siswa->penilaian->sikap }}</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>Status Tamat</dt>
+                        <dd>
+                            @if ($siswa->penilaian->status_tamat === 'Lulus')
+                                <span class="badge badge-success">Lulus</span>
+                            @else
+                                <span class="badge badge-danger">Tidak Lulus</span>
+                            @endif
+                        </dd>
+                    </div>
+                </div>
+            @else
+                <p style="color: var(--text-muted);">Siswa ini belum memiliki penilaian PKL.</p>
+            @endif
         </div>
     </div>
 

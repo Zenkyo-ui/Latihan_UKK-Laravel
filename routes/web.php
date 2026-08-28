@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\KompetensiController;
+use App\Http\Controllers\PenilaianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,16 +35,18 @@ use App\Http\Controllers\KompetensiController;
 //   route('home') → "/"
 //
 // Yang dikirim ke view:
-//   $totalSiswa     = jumlah total siswa
+//   $totalSiswa      = jumlah total siswa
 //   $totalPerusahaan = jumlah total perusahaan
-//   $siswaAktif     = siswa yang sudah punya perusahaan
+//   $siswaAktif      = siswa yang sudah punya perusahaan
 //   $totalKompetensi = jumlah kompetensi
+//   $totalPenilaian  = jumlah penilaian yang sudah diinput
 Route::get('/', function () {
     $totalSiswa = \App\Models\Siswa::count();
     $totalPerusahaan = \App\Models\Perusahaan::count();
     $siswaAktif = \App\Models\Siswa::whereHas('perusahaan')->count();
     $totalKompetensi = \App\Models\Kompetensi::count();
-    return view('home', compact('totalSiswa', 'totalPerusahaan', 'siswaAktif', 'totalKompetensi'));
+    $totalPenilaian = \App\Models\Penilaian::count();
+    return view('home', compact('totalSiswa', 'totalPerusahaan', 'siswaAktif', 'totalKompetensi', 'totalPenilaian'));
 })->name('home');
 
 // Route health check — untuk cek apakah Laravel berjalan
@@ -80,3 +83,7 @@ Route::resource('siswa', SiswaController::class)->parameters([
 
 // KOMPETENSI — parameter pakai ID default
 Route::resource('kompetensi', KompetensiController::class);
+
+// PENILAIAN — parameter pakai ID default
+// Menilai hasil PKL siswa di perusahaan (lapisan lebih dalam dari kompetensi)
+Route::resource('penilaian', PenilaianController::class);

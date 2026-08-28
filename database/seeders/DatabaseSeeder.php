@@ -17,6 +17,8 @@ use Illuminate\Database\Seeder;
  *   1. PerusahaanSeeder    ← duluan (karena siswa butuh perusahaan_id)
  *   2. KompetensiSeeder    ← duluan (karena siswa butuh kompetensi_id)
  *   3. SiswaSeeder         ← terakhir (pakai ID dari perusahaan + kompetensi)
+ *   4. PenilaianSeeder     ← paling akhir (butuh ID siswa untuk penilaian)
+ *   5. SkillSeeder         ← isi daftar skill (bisa kapan saja)
  */
 class DatabaseSeeder extends Seeder
 {
@@ -30,6 +32,8 @@ class DatabaseSeeder extends Seeder
             PerusahaanSeeder::class,   // 1. Isi data perusahaan
             KompetensiSeeder::class,   // 2. Isi data kompetensi
             SiswaSeeder::class,        // 3. Isi data siswa (butuh ID perusahaan + kompetensi)
+            PenilaianSeeder::class,    // 4. Isi data penilaian (butuh ID siswa)
+            SkillSeeder::class,        // 5. Isi daftar skill bahasa pemrograman
         ]);
     }
 }

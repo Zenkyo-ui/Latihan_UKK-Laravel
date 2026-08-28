@@ -14,6 +14,11 @@ use App\Models\Perusahaan;
  * Data yang di-insert:
  * 1. PT Sinergi Digital Nusantara — Software House, kuota 40
  * 2. CV Karya Teknologi — Jaringan & Infrastruktur IT, kuota 5
+ *
+ * DATA DUMMY TAMBAHAN (3 perusahaan baru):
+ * 3. PT Nusantara Software — Software House & Startup, kuota 30
+ * 4. PT Telekomunikasi Jaringan Nusantara — Telekomunikasi & Jaringan, kuota 25
+ * 5. CV Digital Media Kreatif — Multimedia & Desain Grafis, kuota 15
  */
 class PerusahaanSeeder extends Seeder
 {
@@ -35,11 +40,37 @@ class PerusahaanSeeder extends Seeder
                 'nama_pembimbing_industri' => 'Siti Amelia',
                 'kuota' => 5,
             ],
+            [
+                'nama_perusahaan' => 'PT Nusantara Software',
+                'bidang_usaha' => 'Software House & Startup',
+                'alamat' => 'Jl. Asia Afrika No. 88, Bandung',
+                'nama_pembimbing_industri' => 'Budi Hartono',
+                'kuota' => 30,
+            ],
+            [
+                'nama_perusahaan' => 'PT Telekomunikasi Jaringan Nusantara',
+                'bidang_usaha' => 'Telekomunikasi & Jaringan',
+                'alamat' => 'Jl. Jend. Sudirman No. 12, Jakarta',
+                'nama_pembimbing_industri' => 'Rina Wulandari',
+                'kuota' => 25,
+            ],
+            [
+                'nama_perusahaan' => 'CV Digital Media Kreatif',
+                'bidang_usaha' => 'Multimedia & Desain Grafis',
+                'alamat' => 'Jl. Dipatiukur No. 45, Bandung',
+                'nama_pembimbing_industri' => 'Dewi Lestari',
+                'kuota' => 15,
+            ],
         ];
 
-        // Loop array → create 1 baris per item di database
+        // Loop array → buat/update 1 baris per item di database.
+        // updateOrCreate = kalau nama perusahaan sudah ada, UPDATE; kalau belum, CREATE.
+        // Ini mencegah duplikat saat seeder dijalankan berkali-kali.
         foreach ($data as $item) {
-            Perusahaan::create($item);
+            Perusahaan::updateOrCreate(
+                ['nama_perusahaan' => $item['nama_perusahaan']], // cek berdasarkan nama perusahaan
+                $item                                           // data yang diisi/diperbarui
+            );
         }
     }
 }

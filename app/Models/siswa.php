@@ -73,4 +73,37 @@ class Siswa extends Model
     {
         return $this->belongsTo(Kompetensi::class);
     }
+
+    /**
+     * RELASI: Siswa → Penilaian (1:1)
+     * ================================
+     * "Saya (siswa) punya 1 penilaian hasil PKL di perusahaan"
+     *
+     * hasOne artinya FK (siswa_id) ada di TABEL LAIN (penilaians).
+     *
+     * CARA PAKAI:
+     *   $siswa->penilaian            // object Penilaian (atau null kalau belum dinilai)
+     *   $siswa->penilaian->skor      // skor penilaian
+     */
+    public function penilaian()
+    {
+        return $this->hasOne(Penilaian::class);
+    }
+
+    /**
+     * RELASI: Siswa → Skill (Many-to-Many)
+     * =====================================
+     * "Saya (siswa) menguasai BANYAK skill bahasa pemrograman"
+     *
+     * belongsToMany artinya relasi many-to-many yang memakai tabel PIVOT.
+     * Parameter kedua 'siswa_skill' = nama tabel pivot.
+     *
+     * CARA PAKAI:
+     *   $siswa->skills            // collection semua skill yang dikuasai siswa
+     *   $siswa->skills()->sync([1,2,3]);  // set/atur skill yang dikuasai
+     */
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'siswa_skill');
+    }
 }

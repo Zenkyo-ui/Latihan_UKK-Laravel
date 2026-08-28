@@ -5,7 +5,7 @@
 @section('content')
     <div class="page-header">
         <h1>Tambah Kompetensi</h1>
-        <p class="subtitle">Tambahkan kompetensi IT baru yang dipelajari selama PKL.</p>
+        <p class="subtitle">Tambahkan skill bahasa pemrograman yang dapat dikuasai siswa.</p>
     </div>
 
     <div class="card">
@@ -14,9 +14,9 @@
                 @csrf
                 <div class="form-grid">
                     <div class="form-group full">
-                        <label for="nama_kompetensi">Nama Kompetensi</label>
-                        <input type="text" name="nama_kompetensi" id="nama_kompetensi" value="{{ old('nama_kompetensi') }}" class="{{ $errors->has('nama_kompetensi') ? 'is-invalid' : '' }}" required>
-                        @error('nama_kompetensi') <div class="error">{{ $message }}</div> @enderror
+                        <label for="nama_skill">Nama Skill</label>
+                        <input type="text" name="nama_skill" id="nama_skill" value="{{ old('nama_skill') }}" class="{{ $errors->has('nama_skill') ? 'is-invalid' : '' }}" placeholder="Contoh: HTML, CSS, JavaScript" required>
+                        @error('nama_skill') <div class="error">{{ $message }}</div> @enderror
                     </div>
                     <div class="form-group full">
                         <label for="deskripsi">Deskripsi</label>

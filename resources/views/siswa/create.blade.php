@@ -41,9 +41,9 @@
                         @error('perusahaan_id') <div class="error">{{ $message }}</div> @enderror
                     </div>
                     <div class="form-group">
-                        <label for="kompetensi_id">Bidang Keahlian</label>
+                        <label for="kompetensi_id">Jurusan</label>
                         <select name="kompetensi_id" id="kompetensi_id" class="{{ $errors->has('kompetensi_id') ? 'is-invalid' : '' }}" required>
-                            <option value="">-- Pilih Kompetensi --</option>
+                            <option value="">-- Pilih Jurusan --</option>
                             @foreach ($kompetensiList as $k)
                                 <option value="{{ $k->id }}" {{ old('kompetensi_id') == $k->id ? 'selected' : '' }}>
                                     {{ $k->nama_kompetensi }}
@@ -63,6 +63,20 @@
                         @error('tanggal_selesai_pkl') <div class="error">{{ $message }}</div> @enderror
                     </div>
                 </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>Skill yang Dikuasai</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        @foreach ($skillList as $skill)
+                            <label style="display: inline-flex; align-items: center; gap: 6px; background: var(--gray-100); padding: 6px 12px; border-radius: var(--radius); cursor: pointer;">
+                                <input type="checkbox" name="skill_ids[]" value="{{ $skill->id }}"
+                                    {{ in_array($skill->id, old('skill_ids', [])) ? 'checked' : '' }}>
+                                {{ $skill->nama_skill }}
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
+
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Simpan</button>
                     <a href="{{ route('siswa.index') }}" class="btn btn-ghost">Batal</a>

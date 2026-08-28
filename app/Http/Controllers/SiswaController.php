@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Siswa;
 use App\Models\Perusahaan;
 use App\Models\Kompetensi;
+use App\Models\Skill;
 use Illuminate\Http\Request;
 
 /**
@@ -56,8 +57,9 @@ class SiswaController extends Controller
     {
         $perusahaanList = Perusahaan::withCount('siswa')->get();
         $kompetensiList = Kompetensi::all();
+        $skillList = Skill::all();
 
-        return view('siswa.create', compact('perusahaanList', 'kompetensiList'));
+        return view('siswa.create', compact('perusahaanList', 'kompetensiList', 'skillList'));
     }
 
     /**
@@ -81,9 +83,17 @@ class SiswaController extends Controller
             'tanggal_selesai_pkl' => 'required|date|after_or_equal:tanggal_mulai_pkl',
             'perusahaan_id' => 'required|exists:perusahaans,id',
             'kompetensi_id' => 'required|exists:kompetensis,id',
+            // skill_ids = array id skill yang dikuasai. 'array' = wajib berupa array.
+            'skill_ids' => 'nullable|array',
+            'skill_ids.*' => 'exists:skills,id',
         ]);
 
-        Siswa::create($validated);
+        // Simpan siswa dulu (return object-nya) supaya bisa dipakai untuk relasi skill
+        $siswa = Siswa::create($validated);
+
+        // sync = sinkronkan relasi many-to-many: set skill yang dikuasai siswa ini.
+        // Kalau tidak ada pilihan, sync array kosong → hapus semua relasi skill.
+        $siswa->skills()->sync($request->skill_ids ?? []);
 
         return redirect()->route('siswa.index')->with('success', 'Siswa berhasil ditambahkan.');
     }
@@ -96,7 +106,7 @@ class SiswaController extends Controller
      */
     public function show($nis)
     {
-        $siswa = Siswa::with('perusahaan', 'kompetensi')->where('nis', $nis)->firstOrFail();
+        $siswa = Siswa::with('perusahaan', 'kompetensi', 'skills')->where('nis', $nis)->firstOrFail();
 
         return view('siswa.show', compact('siswa'));
     }
@@ -109,11 +119,12 @@ class SiswaController extends Controller
      */
     public function edit($nis)
     {
-        $siswa = Siswa::where('nis', $nis)->firstOrFail();
+        $siswa = Siswa::with('skills')->where('nis', $nis)->firstOrFail();
         $perusahaanList = Perusahaan::all();
         $kompetensiList = Kompetensi::all();
+        $skillList = Skill::all();
 
-        return view('siswa.edit', compact('siswa', 'perusahaanList', 'kompetensiList'));
+        return view('siswa.edit', compact('siswa', 'perusahaanList', 'kompetensiList', 'skillList'));
     }
 
     /**
@@ -138,9 +149,14 @@ class SiswaController extends Controller
             'tanggal_selesai_pkl' => 'required|date|after_or_equal:tanggal_mulai_pkl',
             'perusahaan_id' => 'required|exists:perusahaans,id',
             'kompetensi_id' => 'required|exists:kompetensis,id',
+            'skill_ids' => 'nullable|array',
+            'skill_ids.*' => 'exists:skills,id',
         ]);
 
         $siswa->update($validated);
+
+        // Sinkronkan relasi skill setelah update data siswa
+        $siswa->skills()->sync($request->skill_ids ?? []);
 
         return redirect()->route('siswa.index')->with('success', 'Siswa berhasil diperbarui.');
     }

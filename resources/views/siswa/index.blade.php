@@ -29,7 +29,7 @@
                         <th data-sort="nama">Nama</th>
                         <th data-sort="kelas">Kelas</th>
                         <th>Perusahaan</th>
-                        <th>Kompetensi</th>
+                        <th>Jurusan</th>
                         <th>Mulai</th>
                         <th>Selesai</th>
                         <th style="width:180px">Aksi</th>
