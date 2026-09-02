@@ -47,4 +47,22 @@ class Kompetensi extends Model
     {
         return $this->hasMany(Siswa::class);
     }
+
+    /**
+     * RELASI: Kompetensi → Skill (Many-to-Many)
+     * ==========================================
+     * "Saya (jurusan) memakai BANYAK skill"
+     *
+     * relates ke tabel pivot 'kompetensi_skill'.
+     * Satu jurusan bisa memakai beberapa skill, contoh:
+     * RPL → Logika OOP, MySQL, Git, Laravel, dll.
+     *
+     * CARA PAKAI:
+     *   $kompetensi->skills        // collection semua skill yang dipakai jurusan ini
+     *   $kompetensi->skills->pluck('nama_skill')  // daftar nama skill
+     */
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'kompetensi_skill');
+    }
 }

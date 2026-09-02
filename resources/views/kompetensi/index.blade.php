@@ -6,7 +6,7 @@
     <div class="page-header" style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 12px;">
         <div>
             <h1>Kompetensi (Skill)</h1>
-            <p class="subtitle">{{ $skillList->count() }} skill bahasa pemrograman yang dapat dikuasai siswa.</p>
+            <p class="subtitle">{{ $skillList->count() }} skill yang dikelompokkan berdasarkan jurusan.</p>
         </div>
         <a href="{{ route('kompetensi.create') }}" class="btn btn-primary">+ Tambah</a>
     </div>
@@ -27,6 +27,7 @@
                         <th style="width:50px">No</th>
                         <th data-sort="nama">Nama Skill</th>
                         <th>Deskripsi</th>
+                        <th>Jurusan</th>
                         <th>Yang Menguasai</th>
                         <th style="width:180px">Aksi</th>
                     </tr>
@@ -38,7 +39,15 @@
                             <td><strong data-nama="{{ $skill->nama_skill }}">{{ $skill->nama_skill }}</strong></td>
                             <td>{{ $skill->deskripsi ?? '-' }}</td>
                             <td>
-                                {{-- withCount('siswa') → $skill->siswa_count = jumlah siswa yang menguasai skill ini --}}
+                                {{-- dengan('kompetensi') → $skill->kompetensi = jurusan yang memakai skill ini --}}
+                                @forelse ($skill->kompetensi as $k)
+                                    <span class="badge" style="background: var(--primary-light); color: var(--primary-dark);">{{ $k->nama_kompetensi }}</span>
+                                @empty
+                                    <span class="badge badge-warning">Belum ada jurusan</span>
+                                @endforelse
+                            </td>
+                            <td>
+                                {{-- withCount('siswa') → $skill->siswa_count = jumlah siswa yang menguasai --}}
                                 <span class="badge badge-success">{{ $skill->siswa_count }} siswa</span>
                             </td>
                             <td style="display: flex; gap: 4px; flex-wrap: wrap;">
@@ -52,7 +61,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="5" class="empty-state">Belum ada data skill.</td></tr>
+                        <tr><td colspan="6" class="empty-state">Belum ada data skill.</td></tr>
                     @endforelse
                 </tbody>
             </table>

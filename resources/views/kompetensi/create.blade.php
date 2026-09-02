@@ -5,8 +5,18 @@
 @section('content')
     <div class="page-header">
         <h1>Tambah Kompetensi</h1>
-        <p class="subtitle">Tambahkan skill bahasa pemrograman yang dapat dikuasai siswa.</p>
+        <p class="subtitle">Tambahkan skill baru dan tentukan jurusan mana yang memakainya.</p>
     </div>
+
+    @if ($errors->any())
+        <div class="alert" style="background: var(--danger-light); color: var(--danger); border: 1px solid var(--danger);">
+            <ul style="margin:0; padding-left: 18px;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="card">
         <div class="card-body">
@@ -15,13 +25,28 @@
                 <div class="form-grid">
                     <div class="form-group full">
                         <label for="nama_skill">Nama Skill</label>
-                        <input type="text" name="nama_skill" id="nama_skill" value="{{ old('nama_skill') }}" class="{{ $errors->has('nama_skill') ? 'is-invalid' : '' }}" placeholder="Contoh: HTML, CSS, JavaScript" required>
+                        <input type="text" name="nama_skill" id="nama_skill" value="{{ old('nama_skill') }}" class="{{ $errors->has('nama_skill') ? 'is-invalid' : '' }}" placeholder="Contoh: Flutter, Desain Grafis, Jaringan MikroTik" required>
                         @error('nama_skill') <div class="error">{{ $message }}</div> @enderror
                     </div>
                     <div class="form-group full">
                         <label for="deskripsi">Deskripsi</label>
                         <textarea name="deskripsi" id="deskripsi" rows="4" class="{{ $errors->has('deskripsi') ? 'is-invalid' : '' }}">{{ old('deskripsi') }}</textarea>
                         @error('deskripsi') <div class="error">{{ $message }}</div> @enderror
+                    </div>
+
+                    {{-- RELASI SKILL ↔ JURUSAN: centang jurusan yang memakai skill ini --}}
+                    <div class="form-group full">
+                        <label>Skill ini untuk jurusan mana?</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            @foreach ($kompetensiList as $k)
+                                <label style="display: inline-flex; align-items: center; gap: 6px; background: var(--gray-100); padding: 6px 12px; border-radius: var(--radius); cursor: pointer;">
+                                    <input type="checkbox" name="kompetensi_ids[]" value="{{ $k->id }}"
+                                        {{ in_array($k->id, old('kompetensi_ids', [])) ? 'checked' : '' }}>
+                                    {{ $k->nama_kompetensi }}
+                                </label>
+                            @endforeach
+                        </div>
+                        @error('kompetensi_ids') <div class="error">{{ $message }}</div> @enderror
                     </div>
                 </div>
                 <div class="form-actions">

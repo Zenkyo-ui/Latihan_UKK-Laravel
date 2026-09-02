@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Siswa;
 use App\Models\Perusahaan;
 use App\Models\Kompetensi;
-use App\Models\Skill;
 use Illuminate\Http\Request;
 
 /**
@@ -57,9 +56,8 @@ class SiswaController extends Controller
     {
         $perusahaanList = Perusahaan::withCount('siswa')->get();
         $kompetensiList = Kompetensi::all();
-        $skillList = Skill::all();
 
-        return view('siswa.create', compact('perusahaanList', 'kompetensiList', 'skillList'));
+        return view('siswa.create', compact('perusahaanList', 'kompetensiList'));
     }
 
     /**
@@ -122,9 +120,8 @@ class SiswaController extends Controller
         $siswa = Siswa::with('skills')->where('nis', $nis)->firstOrFail();
         $perusahaanList = Perusahaan::all();
         $kompetensiList = Kompetensi::all();
-        $skillList = Skill::all();
 
-        return view('siswa.edit', compact('siswa', 'perusahaanList', 'kompetensiList', 'skillList'));
+        return view('siswa.edit', compact('siswa', 'perusahaanList', 'kompetensiList'));
     }
 
     /**

@@ -66,14 +66,10 @@
 
                 <div class="form-group" style="margin-top: 20px;">
                     <label>Skill yang Dikuasai</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        @foreach ($skillList as $skill)
-                            <label style="display: inline-flex; align-items: center; gap: 6px; background: var(--gray-100); padding: 6px 12px; border-radius: var(--radius); cursor: pointer;">
-                                <input type="checkbox" name="skill_ids[]" value="{{ $skill->id }}"
-                                    {{ in_array($skill->id, old('skill_ids', [])) ? 'checked' : '' }}>
-                                {{ $skill->nama_skill }}
-                            </label>
-                        @endforeach
+                    {{-- Container diisi JavaScript (AJAX) saat jurusan dipilih.
+                         Tidak di-render statis lagi supaya skill sesuai jurusan. --}}
+                    <div id="skillContainer" class="skill-checkbox-container">
+                        <p style="color: var(--text-muted); margin: 0;">Pilih jurusan dulu untuk melihat daftar skill.</p>
                     </div>
                 </div>
 
@@ -85,3 +81,62 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        {{-- NIP: variabel yang dikirim controller untuk pre-check (di create selalu kosong) --}}
+        const selectedSkillIds = @json(old('skill_ids', []));
+
+        {{-- AMBIL SKILL DARI JURUSAN (AJAX) -> render jadi checkbox --}}
+        function loadSkills(kompetensiId) {
+            const container = document.getElementById('skillContainer');
+            const jurusan = document.getElementById('kompetensi_id');
+
+            // Kalau belum pilih jurusan → tampilkan pesan
+            if (!kompetensiId) {
+                container.innerHTML = '<p style="color: var(--text-muted); margin: 0;">Pilih jurusan dulu untuk melihat daftar skill.</p>';
+                return;
+            }
+
+            container.innerHTML = '<p style="color: var(--text-muted); margin: 0;">Memuat skill...</p>';
+
+            // fetch = AJAX bawaan JavaScript. URL mengembalikan JSON dari controller.
+            fetch(`/kompetensi/${kompetensiId}/skills`)
+                .then(response => response.json())
+                .then(skills => {
+                    if (!skills.length) {
+                        container.innerHTML = '<p style="color: var(--text-muted); margin: 0;">Belum ada skill untuk jurusan ini.</p>';
+                        return;
+                    }
+
+                    // Susun HTML checkbox satu per satu
+                    let html = '';
+                    skills.forEach(skill => {
+                        const checked = selectedSkillIds.includes(skill.id) ? 'checked' : '';
+                        html += `
+                            <label style="display: inline-flex; align-items: center; gap: 6px; background: var(--gray-100); padding: 6px 12px; border-radius: var(--radius); cursor: pointer;">
+                                <input type="checkbox" name="skill_ids[]" value="${skill.id}" ${checked}>
+                                ${skill.nama_skill}
+                            </label>
+                        `;
+                    });
+                    container.innerHTML = html;
+                })
+                .catch(() => {
+                    container.innerHTML = '<p style="color: var(--danger); margin: 0;">Gagal memuat skill. Coba lagi.</p>';
+                });
+        }
+
+        {{-- SAAT DROPDOWN JURUSAN BERUBAH -> muat ulang skill --}}
+        document.getElementById('kompetensi_id').addEventListener('change', function () {
+            selectedSkillIds.length = 0; // reset pilihan lama supaya tidak salah centang
+            loadSkills(this.value);
+        });
+
+        {{-- SAAT HALAMAN PERTAMA KALI DIBUKA: kalau jurusan sudah terpilih (misal old()), load langsung --}}
+        document.addEventListener('DOMContentLoaded', function () {
+            const komp = document.getElementById('kompetensi_id');
+            if (komp.value) loadSkills(komp.value);
+        });
+    </script>
+@endpush

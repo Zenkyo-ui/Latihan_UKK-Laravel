@@ -84,6 +84,11 @@ Route::resource('siswa', SiswaController::class)->parameters([
 // KOMPETENSI — parameter pakai ID default
 Route::resource('kompetensi', KompetensiController::class);
 
+// AJAX: ambil daftar skill milik jurusan tertentu (dipakai form siswa)
+// Tempatkan SEBELUM resource agar URL /kompetensi/{id}/skills tidak tertabrak
+// route show resource (/kompetensi/{kompetensi}).
+Route::get('kompetensi/{kompetensi}/skills', [KompetensiController::class, 'skillsByKompetensi']);
+
 // PENILAIAN — parameter pakai ID default
 // Menilai hasil PKL siswa di perusahaan (lapisan lebih dalam dari kompetensi)
 Route::resource('penilaian', PenilaianController::class);

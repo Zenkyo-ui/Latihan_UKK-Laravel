@@ -6,7 +6,7 @@
     <div class="page-header" style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 12px;">
         <div>
             <h1>{{ $skill->nama_skill }}</h1>
-            <p class="subtitle">Detail skill bahasa pemrograman</p>
+            <p class="subtitle">Detail skill beserta jurusan dan siswa yang memakainya</p>
         </div>
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <a href="{{ route('kompetensi.edit', $skill->id) }}" class="btn btn-secondary">Edit</a>
@@ -28,6 +28,16 @@
                 <div class="detail-item">
                     <dt>Deskripsi</dt>
                     <dd>{{ $skill->deskripsi ?? '-' }}</dd>
+                </div>
+                <div class="detail-item">
+                    <dt>Jurusan yang Memakai</dt>
+                    <dd>
+                        @forelse ($skill->kompetensi as $k)
+                            <span class="badge" style="background: var(--primary-light); color: var(--primary-dark);">{{ $k->nama_kompetensi }}</span>
+                        @empty
+                            <span class="badge badge-warning">Belum ada jurusan</span>
+                        @endforelse
+                    </dd>
                 </div>
                 <div class="detail-item">
                     <dt>Yang Menguasai</dt>
