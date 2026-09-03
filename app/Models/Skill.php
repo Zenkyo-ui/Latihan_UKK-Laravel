@@ -63,7 +63,7 @@ class Skill extends Model
      *
      * relates ke tabel pivot 'kompetensi_skill'.
      * Satu skill bisa terhubung ke beberapa jurusan, contoh:
-     * "Logika OOP" → RPL + Mobile Development.
+     * "Logika OOP" → PPLG + Mobile Development.
      *
      * CARA PAKAI:
      *   $skill->kompetensi            // collection semua jurusan yang pakai skill ini

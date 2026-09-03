@@ -16,8 +16,8 @@ use App\Models\Skill;
  * - 1 skill bisa dipakai BANYAK jurusan (skill "bareng")
  *
  * CONTOH SKILL BARE:
- * - "Pemrograman OOP" → dipakai RPL + Mobile Development
- * - "Pengembangan API" → dipakai RPL + Mobile Development
+ * - "Pemrograman OOP" → dipakai PPLG + Mobile Development
+ * - "Pengembangan API" → dipakai PPLG + Mobile Development
  *
  * CARA KERJA SEEDER:
  * 1. Ambil nama jurusan → cari id di tabel kompetensis
@@ -41,8 +41,6 @@ class KompetensiSkillSeeder extends Seeder
                 'Dasar Pembuatan Game (Unity)',
                 'Dasar Pembuatan Game (Godot)',
                 'Dasar Pembuatan Game (Construct)',
-            ],
-            'RPL' => [
                 'Pemrograman OOP',
                 'Pengelolaan Database MySQL',
                 'Pengelolaan Database PostgreSQL',

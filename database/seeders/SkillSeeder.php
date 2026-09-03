@@ -14,7 +14,7 @@ use App\Models\Skill;
  * Setiap skill adalah 1 baris UNIK (updateOrCreate berdasarkan nama_skill).
  * Hubungan "skill milik jurusan mana" DIISI TERPISAH oleh
  * KompetensiSkillSeeder lewat tabel pivot kompetensi_skill.
- * (contoh: skill "Pemrograman OOP" dipakai RPL + Mobile Dev)
+ * (contoh: skill "Pemrograman OOP" dipakai PPLG + Mobile Dev)
  *
  * CATATAN:
  * Pakai updateOrCreate supaya seeder aman dijalankan berkali-kali
@@ -34,7 +34,7 @@ class SkillSeeder extends Seeder
             ['nama_skill' => 'Dasar Pembuatan Game (Godot)', 'deskripsi' => 'Game engine open-source Godot untuk 2D/3D'],
             ['nama_skill' => 'Dasar Pembuatan Game (Construct)', 'deskripsi' => 'Game engine berbasis event untuk pemula tanpa banyak kode'],
 
-            // ---------- RPL (Rekayasa Perangkat Lunak) ----------
+            // ---------- PPLG Web & Database (dari gabungan RPL) ----------
             ['nama_skill' => 'Pemrograman OOP', 'deskripsi' => 'Object Oriented Programming: class, object, inheritance, dll'],
             ['nama_skill' => 'Pengelolaan Database MySQL', 'deskripsi' => 'Design & query database relasional dengan MySQL'],
             ['nama_skill' => 'Pengelolaan Database PostgreSQL', 'deskripsi' => 'Manajemen database open-source PostgreSQL'],

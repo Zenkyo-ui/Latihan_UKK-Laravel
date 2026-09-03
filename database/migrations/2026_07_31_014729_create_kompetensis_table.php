@@ -18,7 +18,7 @@ return new class extends Migration
     {
         Schema::create('kompetensis', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kompetensi', 100);   // Contoh: "PPLG", "TKJ"
+            $table->string('nama_kompetensi');   // Contoh: "PPLG", "TKJ"
             $table->text('deskripsi')->nullable();     // Deskripsi, boleh kosong
             $table->timestamps();
         });
@@ -27,5 +27,26 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('kompetensis');
+    }
+};
+
+    return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('kompetensi', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('nama_kompetensi');
+
+            $table->text('deskripsi')->nullable();
+
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('kompetensi');
     }
 };

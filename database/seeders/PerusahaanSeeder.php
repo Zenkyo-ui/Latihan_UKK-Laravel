@@ -61,6 +61,43 @@ class PerusahaanSeeder extends Seeder
                 'nama_pembimbing_industri' => 'Dewi Lestari',
                 'kuota' => 15,
             ],
+
+            // ===== PERUSAHAAN BARU (satu perusahaan spesifik per jurusan) =====
+            [
+                'nama_perusahaan' => 'PT Game Studio Indonesia',
+                'bidang_usaha' => 'Game Development & Studio',
+                'alamat' => 'Jl. Merdeka No. 77, Bandung',
+                'nama_pembimbing_industri' => 'Sultan Gaming Sengit',
+                'kuota' => 0,
+            ],
+            [
+                'nama_perusahaan' => 'PT Cloudindo Solusi Cloud',
+                'bidang_usaha' => 'Cloud Computing & Infrastruktur',
+                'alamat' => 'Jl. Thamrin No. 21, Jakarta',
+                'nama_pembimbing_industri' => 'Devan Cloud Wanderer',
+                'kuota' => 0,
+            ],
+            [
+                'nama_perusahaan' => 'PT Cyber Security Solutions',
+                'bidang_usaha' => 'Keamanan Siber',
+                'alamat' => 'Jl. Asia Afrika No. 55, Bandung',
+                'nama_pembimbing_industri' => 'Nia Hacker Baik',
+                'kuota' => 0,
+            ],
+            [
+                'nama_perusahaan' => 'PT Data Analytics Indonesia',
+                'bidang_usaha' => 'Data Science & Analitik',
+                'alamat' => 'Jl. Sudirman No. 40, Jakarta',
+                'nama_pembimbing_industri' => 'Raka Data Gede',
+                'kuota' => 0,
+            ],
+            [
+                'nama_perusahaan' => 'PT Solusi Teknologi IT',
+                'bidang_usaha' => 'IT Support & Infrastruktur',
+                'alamat' => 'Jl. Dago No. 12, Bandung',
+                'nama_pembimbing_industri' => 'Lina Nanya Jem',
+                'kuota' => 0,
+            ],
         ];
 
         // Loop array → buat/update 1 baris per item di database.

@@ -23,7 +23,6 @@ class KompetensiSeeder extends Seeder
     {
         $data = [
             ['nama_kompetensi' => 'PPLG', 'deskripsi' => 'Pengembangan Perangkat Lunak dan Game'],
-            ['nama_kompetensi' => 'RPL', 'deskripsi' => 'Rekayasa Perangkat Lunak'],
             ['nama_kompetensi' => 'TKJ', 'deskripsi' => 'Teknik Komputer dan Jaringan'],
             ['nama_kompetensi' => 'MM', 'deskripsi' => 'Multimedia'],
             ['nama_kompetensi' => 'Mobile Development', 'deskripsi' => 'Pengembangan Aplikasi Mobile'],

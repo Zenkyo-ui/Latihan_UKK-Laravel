@@ -40,7 +40,7 @@ class SiswaFactory extends Factory
             'nama' => $this->faker->name(),
 
             // randomElement() = pilih 1 dari array secara acak
-            'kelas' => $this->faker->randomElement(['XI RPL 1', 'XI RPL 2', 'XI TKJ 1']),
+            'kelas' => $this->faker->randomElement(['XI PPLG 1', 'XI PPLG 2', 'XI TKJ 1']),
 
             'tanggal_mulai_pkl' => $tanggalMulai,
             'tanggal_selesai_pkl' => $tanggalSelesai,

@@ -36,6 +36,9 @@ class DatabaseSeeder extends Seeder
             PenilaianSeeder::class,        // 4. Isi data penilaian (butuh ID siswa)
             SkillSeeder::class,            // 5. Isi daftar skill
             KompetensiSkillSeeder::class,  // 6. Isi relasi jurusan ↔ skill
+            SiswaSkillSeeder::class,       // 7. Isi relasi siswa ↔ skill
+            SiswaDummySeeder::class,       // 8. Isi sisa kuota PKL dengan siswa dummy massal
+            PenempatanPerusahaanSeeder::class, // 9. Tempatkan siswa ke perusahaan sesuai jurusan (terakhir)
         ]);
     }
 }

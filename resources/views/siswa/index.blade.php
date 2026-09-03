@@ -6,7 +6,7 @@
     <div class="page-header" style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 12px;">
         <div>
             <h1>Data Siswa PKL</h1>
-            <p class="subtitle">{{ $siswaList->count() }} siswa terdaftar dalam program PKL.</p>
+            <p class="subtitle">{{ $siswaList->total() }} siswa terdaftar dalam program PKL.</p>
         </div>
         <a href="{{ route('siswa.create') }}" class="btn btn-primary">+ Tambah</a>
     </div>
@@ -30,6 +30,7 @@
                         <th data-sort="kelas">Kelas</th>
                         <th>Perusahaan</th>
                         <th>Jurusan</th>
+                        <th>Skill</th>
                         <th>Mulai</th>
                         <th>Selesai</th>
                         <th style="width:180px">Aksi</th>
@@ -56,6 +57,13 @@
                                     <span style="color: var(--text-muted);">-</span>
                                 @endif
                             </td>
+                            <td>
+                                @forelse ($siswa->skills as $skill)
+                                    - {{ $skill->nama_skill }}<br>
+                                @empty
+                                    <span style="color: var(--text-muted);">-</span>
+                                @endforelse
+                            </td>
                             <td>{{ $siswa->tanggal_mulai_pkl }}</td>
                             <td>{{ $siswa->tanggal_selesai_pkl }}</td>
                             <td style="display: flex; align-items: center; gap: 4px; white-space: nowrap;">
@@ -72,10 +80,17 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="9" class="empty-state">Belum ada data siswa.</td></tr>
+                        <tr><td colspan="10" class="empty-state">Belum ada data siswa.</td></tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
+
+    {{-- PAGINATION — pisahkan 115 siswa jadi beberapa halaman (1, 2, 3, ...) --}}
+    @if ($siswaList->hasPages())
+        <div style="margin-top: 20px;">
+            {{ $siswaList->links() }}
+        </div>
+    @endif
 @endsection

@@ -31,26 +31,29 @@ use Illuminate\Http\Request;
 class KompetensiController extends Controller
 {
     /**
-     * INDEX — Daftar semua skill + jurusan pemakainya
-     * withCount('siswa') = berapa siswa yang menguasai tiap skill.
-     * with('kompetensi') = jurusan mana saja yang memakai skill ini.
+     * INDEX — Daftar semua jurusan + jumlah skill tiap jurusan.
+     * Saat halaman dibuka, tampilkan daftar jurusan (nama + jumlah skill).
+     * Skill per jurusan dimuat lewat AJAX (skillsByKompetensi) saat dropdown dipilih.
      */
     public function index()
     {
-        $skillList = Skill::withCount('siswa')->with('kompetensi')->get();
+        $kompetensiList = Kompetensi::withCount('skills')->orderBy('nama_kompetensi')->get();
 
-        return view('kompetensi.index', compact('skillList'));
+        return view('kompetensi.index', compact('kompetensiList'));
     }
 
     /**
      * CREATE — Form tambah skill.
-     * Kirim daftar jurusan supaya nanti bisa dicentang (relasi skill↔jurusan).
+     * Kirim daftar jurusan (bisa dicentang, relasi skill↔jurusan).
+     * Mendukung query ?jurusan=id untuk pre-check jurusan yang sedang dipilih
+     * (saat tombol "+ Tambah Skill" diklik dari halaman Kompetensi).
      */
     public function create()
     {
         $kompetensiList = Kompetensi::all();
+        $defaultJurusan = (int) request('jurusan'); // 0 = tidak ada jurusan terpilih
 
-        return view('kompetensi.create', compact('kompetensiList'));
+        return view('kompetensi.create', compact('kompetensiList', 'defaultJurusan'));
     }
 
     /**
@@ -146,8 +149,12 @@ class KompetensiController extends Controller
      */
     public function skillsByKompetensi($id)
     {
-        $kompetensi = Kompetensi::with('skills')->findOrFail($id);
+        $jurusan = Kompetensi::findOrFail($id);
 
-        return response()->json($kompetensi->skills);
+        $skills = Skill::whereHas('kompetensi', function ($q) use ($id) {
+            $q->where('kompetensi_id', $id);
+        })->withCount('siswa')->orderBy('nama_skill')->get();
+
+        return response()->json($skills);
     }
 }

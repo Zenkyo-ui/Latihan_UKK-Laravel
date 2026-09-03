@@ -8,7 +8,7 @@
     {{-- Logo + nama aplikasi --}}
     <a href="{{ route('home') }}" class="brand">
         <span class="brand-icon">E</span>
-        E-PKL RPL
+        E-PKL PPLG
     </a>
 
     {{-- Menu navigasi --}}

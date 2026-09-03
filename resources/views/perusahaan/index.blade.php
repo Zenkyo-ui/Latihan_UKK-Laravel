@@ -13,65 +13,60 @@
 
     @include('partials.alert')
 
-    <div class="card">
-        <div class="card-header">
-            <div class="search-box">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" id="cariPerusahaan" placeholder="Cari perusahaan...">
+    <div class="home-grid">
+        @forelse ($perusahaanList as $perusahaan)
+            @php
+                $sisa = $perusahaan->kuota - $perusahaan->siswa_count;
+                $penuh = $sisa <= 0;
+                $persen = $perusahaan->kuota > 0 ? round($perusahaan->siswa_count / $perusahaan->kuota * 100) : 0;
+            @endphp
+            <div class="home-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div class="home-card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <div>
+                        <h2 style="font-size:1.1rem; color:var(--text-strong);">{{ $perusahaan->nama_perusahaan }}</h2>
+                        <span class="badge {{ $penuh ? 'badge-danger' : 'badge-success' }}" style="margin-top:4px;">
+                            {{ $perusahaan->bidang_usaha }}
+                        </span>
+                    </div>
+                </div>
+
+                <p style="color:var(--text-muted); font-size:0.9rem; margin:0;">{{ $perusahaan->alamat }}</p>
+
+                <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.85rem;">
+                    <span style="color:var(--text-muted);">Pembimbing</span>
+                    <strong style="color:var(--text);">{{ $perusahaan->nama_pembimbing_industri ?: '-' }}</strong>
+                </div>
+
+                <div>
+                    <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.85rem; margin-bottom:6px;">
+                        <span style="color:var(--text-muted);">Kuota terisi</span>
+                        <strong style="color:var(--text);">{{ $perusahaan->siswa_count }} / {{ $perusahaan->kuota }}</strong>
+                    </div>
+                    <div style="height:8px; border-radius:9999px; background:var(--gray-200); overflow:hidden;">
+                        <div style="height:100%; width:{{ $persen }}%; background:{{ $penuh ? 'var(--danger)' : 'var(--success)' }}; border-radius:9999px;"></div>
+                    </div>
+                    <div style="margin-top:6px; font-size:0.8rem; font-weight:600; {{ $penuh ? 'color:var(--danger);' : 'color:var(--success);' }}">
+                        {{ $penuh ? 'Kuota Penuh' : 'Sisa ' . $sisa . ' slot' }}
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;">
+                    <a href="{{ route('perusahaan.show', $perusahaan->id) }}" class="btn btn-primary" style="padding:7px 14px; font-size:0.78rem; line-height:1.2;">Detail</a>
+                    <a href="{{ route('perusahaan.edit', $perusahaan->id) }}" class="btn btn-secondary" style="padding:7px 14px; font-size:0.78rem; line-height:1.2;">Edit</a>
+                    <form method="POST" action="{{ route('perusahaan.destroy', $perusahaan->id) }}" onsubmit="return confirm('Yakin hapus perusahaan ini?')" style="display:inline-flex; align-items:center;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger" style="padding:7px 14px; font-size:0.78rem; line-height:1.2;">
+                            Hapus
+                        </button>
+                    </form>
+                </div>
             </div>
-        </div>
-        <div style="overflow-x: auto;">
-            <table id="tabelPerusahaan">
-                <thead>
-                    <tr>
-                        <th style="width:50px">No</th>
-                        <th data-sort="nama">Nama Perusahaan</th>
-                        <th data-sort="bidang">Bidang Usaha</th>
-                        <th>Alamat</th>
-                        <th>Pembimbing</th>
-                        <th>Kuota</th>
-                        <th>Sisa</th>
-                        <th style="width:180px">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($perusahaanList as $perusahaan)
-                        @php
-                            $sisa = $perusahaan->kuota - $perusahaan->siswa_count;
-                            $penuh = $sisa <= 0;
-                        @endphp
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td><strong data-nama="{{ $perusahaan->nama_perusahaan }}">{{ $perusahaan->nama_perusahaan }}</strong></td>
-                            <td data-bidang="{{ $perusahaan->bidang_usaha }}">{{ $perusahaan->bidang_usaha }}</td>
-                            <td>{{ $perusahaan->alamat }}</td>
-                            <td>{{ $perusahaan->nama_pembimbing_industri }}</td>
-                            <td>{{ $perusahaan->siswa_count }} / {{ $perusahaan->kuota }}</td>
-                            <td>
-                                @if ($penuh)
-                                    <span style="color: var(--danger); font-weight: 600;">Penuh</span>
-                                @else
-                                    <span style="color: var(--success);">{{ $sisa }}</span>
-                                @endif
-                            </td>
-                            <td style="display: flex; align-items: center; gap: 4px; white-space: nowrap;">
-                                <a href="{{ route('perusahaan.show', $perusahaan->id) }}" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2;">Detail</a>
-                                <a href="{{ route('perusahaan.edit', $perusahaan->id) }}" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2;">Edit</a>
-                                <form method="POST" action="{{ route('perusahaan.destroy', $perusahaan->id) }}" onsubmit="return confirm('Yakin hapus perusahaan ini?')" style="display: inline-flex; align-items: center;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2; display: inline-flex; align-items: center; gap: 4px;">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                                        Hapus
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr><td colspan="8" class="empty-state">Belum ada data perusahaan.</td></tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+        @empty
+            <p class="empty-state" style="grid-column:1/-1;">Belum ada data perusahaan.</p>
+        @endforelse
     </div>
 @endsection

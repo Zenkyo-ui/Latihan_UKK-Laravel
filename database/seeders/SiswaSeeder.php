@@ -32,7 +32,6 @@ class SiswaSeeder extends Seeder
         $pplg = Kompetensi::where('nama_kompetensi', 'PPLG')->first();
         $tkj = Kompetensi::where('nama_kompetensi', 'TKJ')->first();
         $mm = Kompetensi::where('nama_kompetensi', 'MM')->first();
-        $rpl = Kompetensi::where('nama_kompetensi', 'RPL')->first();
 
         $data = [
             // ===== 4 SISWA LAMA =====
@@ -77,16 +76,16 @@ class SiswaSeeder extends Seeder
             [
                 'nis' => '22231005',
                 'nama' => 'Putra Pratama',
-                'kelas' => 'XII RPL 1',
+                'kelas' => 'XII PPLG 1',
                 'perusahaan_id' => $perusahaan3?->id ?? 3,
-                'kompetensi_id' => $rpl?->id ?? 2,
+                'kompetensi_id' => $pplg?->id ?? 1,
                 'tanggal_mulai_pkl' => '2026-07-15',
                 'tanggal_selesai_pkl' => '2026-12-15',
             ],
             [
                 'nis' => '22231006',
                 'nama' => 'Dewi Sartika',
-                'kelas' => 'XII RPL 2',
+                'kelas' => 'XII PPLG 2',
                 'perusahaan_id' => $perusahaan3?->id ?? 3,
                 'kompetensi_id' => $pplg?->id ?? 1,
                 'tanggal_mulai_pkl' => '2026-07-15',
@@ -113,7 +112,7 @@ class SiswaSeeder extends Seeder
             [
                 'nis' => '22231009',
                 'nama' => 'Bayu Aji',
-                'kelas' => 'XII RPL 3',
+                'kelas' => 'XII PPLG 3',
                 'perusahaan_id' => $perusahaan3?->id ?? 3,
                 'kompetensi_id' => $pplg?->id ?? 1,
                 'tanggal_mulai_pkl' => '2026-08-10',

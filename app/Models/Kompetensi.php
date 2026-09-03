@@ -34,18 +34,17 @@ class Kompetensi extends Model
     /**
      * RELASI: Kompetensi → Siswa (1:N)
      * =================================
-     * "Saya (kompetensi) dimiliki BANYAK siswa"
+     * "Saya (kompetensi/jurusan) dimiliki BANYAK siswa yang mengambil jurusan ini"
      *
-     * hasMany artinya FK ada di TABEL LAIN (siswas).
-     * Laravel otomatis cari kolom 'kompetensi_id' di tabel siswas.
+     * hasMany artinya FK (kompetensi_id) ada di TABEL LAIN (siswas).
      *
      * CARA PAKAI:
-     *   $kompetensi->siswa             // collection semua siswa
+     *   $kompetensi->siswa             // collection semua siswa di jurusan ini
      *   $kompetensi->siswa_count       // jumlah (kalau pakai withCount)
      */
     public function siswa()
     {
-        return $this->hasMany(Siswa::class);
+        return $this->hasMany(Siswa::class, 'kompetensi_id');
     }
 
     /**
@@ -55,7 +54,7 @@ class Kompetensi extends Model
      *
      * relates ke tabel pivot 'kompetensi_skill'.
      * Satu jurusan bisa memakai beberapa skill, contoh:
-     * RPL → Logika OOP, MySQL, Git, Laravel, dll.
+     * PPLG → Logika OOP, MySQL, Git, Laravel, dll.
      *
      * CARA PAKAI:
      *   $kompetensi->skills        // collection semua skill yang dipakai jurusan ini

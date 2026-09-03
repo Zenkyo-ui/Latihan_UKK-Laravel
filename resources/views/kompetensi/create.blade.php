@@ -38,10 +38,17 @@
                     <div class="form-group full">
                         <label>Skill ini untuk jurusan mana?</label>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            @php
+                                // Pre-check: dari old() kalau ada error validasi,
+                                // atau dari query ?jurusan=id (jurusan aktif saat "+ Tambah Skill" diklik).
+                                $checkedJurusan = !empty(old('kompetensi_ids', []))
+                                    ? old('kompetensi_ids')
+                                    : ($defaultJurusan > 0 ? [$defaultJurusan] : []);
+                            @endphp
                             @foreach ($kompetensiList as $k)
                                 <label style="display: inline-flex; align-items: center; gap: 6px; background: var(--gray-100); padding: 6px 12px; border-radius: var(--radius); cursor: pointer;">
                                     <input type="checkbox" name="kompetensi_ids[]" value="{{ $k->id }}"
-                                        {{ in_array($k->id, old('kompetensi_ids', [])) ? 'checked' : '' }}>
+                                        {{ in_array($k->id, $checkedJurusan) ? 'checked' : '' }}>
                                     {{ $k->nama_kompetensi }}
                                 </label>
                             @endforeach

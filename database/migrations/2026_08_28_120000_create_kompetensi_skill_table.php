@@ -12,12 +12,12 @@ use Illuminate\Support\Facades\Schema;
  *
  * KENAPA PERLU PIVOT?
  * - 1 skill bisa dipakai oleh BANYAK jurusan (contoh: "Logika OOP"
- *   dipakai RPL dan Mobile Development sekaligus).
+ *   dipakai PPLG dan Mobile Development sekaligus).
  * - 1 jurusan bisa memakai BANYAK skill.
  * → Relasi many-to-many butuh tabel penyambung (pivot).
  *
  * Setiap baris = 1 pasangan (jurusan, skill).
- * Contoh: | kompetensi_id=2 | skill_id=8 |  artinya jurusan RPL pakai skill Logika OOP.
+ * Contoh: | kompetensi_id=1 | skill_id=8 |  artinya jurusan PPLG pakai skill Logika OOP.
  *
  * STRUKTUR TABEL:
  * | id | kompetensi_id | skill_id | created_at | updated_at |

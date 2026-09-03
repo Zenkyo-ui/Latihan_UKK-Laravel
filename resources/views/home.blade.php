@@ -15,7 +15,7 @@
 @section('content')
     <div class="page-header">
         <h1>Dashboard</h1>
-        <p class="subtitle">Ringkasan data Sistem Informasi PKL SMK RPL.</p>
+        <p class="subtitle">Ringkasan data Sistem Informasi PKL SMK PPLG.</p>
     </div>
 
     {{-- STATISTICS CARDS --}}

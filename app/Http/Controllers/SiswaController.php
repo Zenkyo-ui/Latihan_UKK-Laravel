@@ -38,7 +38,7 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $siswaList = Siswa::with('perusahaan', 'kompetensi')->get();
+        $siswaList = Siswa::with('perusahaan', 'kompetensi', 'skills')->paginate(10);
 
         return view('siswa.index', compact('siswaList'));
     }
