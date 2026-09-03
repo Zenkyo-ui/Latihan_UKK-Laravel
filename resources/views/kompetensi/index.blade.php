@@ -41,22 +41,25 @@
                             <td>
                                 {{-- dengan('kompetensi') → $skill->kompetensi = jurusan yang memakai skill ini --}}
                                 @forelse ($skill->kompetensi as $k)
-                                    <span class="badge" style="background: var(--primary-light); color: var(--primary-dark);">{{ $k->nama_kompetensi }}</span>
+                                    {{ $k->nama_kompetensi }}{{ !$loop->last ? ', ' : '' }}
                                 @empty
-                                    <span class="badge badge-warning">Belum ada jurusan</span>
+                                    <span style="color: var(--text-muted);">Belum ada jurusan</span>
                                 @endforelse
                             </td>
                             <td>
                                 {{-- withCount('siswa') → $skill->siswa_count = jumlah siswa yang menguasai --}}
                                 <span class="badge badge-success">{{ $skill->siswa_count }} siswa</span>
                             </td>
-                            <td style="display: flex; gap: 4px; flex-wrap: wrap;">
-                                <a href="{{ route('kompetensi.show', $skill->id) }}" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.75rem;">Detail</a>
-                                <a href="{{ route('kompetensi.edit', $skill->id) }}" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.75rem;">Edit</a>
-                                <form method="POST" action="{{ route('kompetensi.destroy', $skill->id) }}" onsubmit="return confirm('Yakin hapus skill ini?')">
+                            <td style="display: flex; align-items: center; gap: 4px; white-space: nowrap;">
+                                <a href="{{ route('kompetensi.show', $skill->id) }}" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2;">Detail</a>
+                                <a href="{{ route('kompetensi.edit', $skill->id) }}" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2;">Edit</a>
+                                <form method="POST" action="{{ route('kompetensi.destroy', $skill->id) }}" onsubmit="return confirm('Yakin hapus skill ini?')" style="display: inline-flex; align-items: center;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-delete">Hapus</button>
+                                    <button type="submit" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2; display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                        Hapus
+                                    </button>
                                 </form>
                             </td>
                         </tr>

@@ -50,9 +50,9 @@
                             </td>
                             <td>
                                 @if ($penilaian->siswa && $penilaian->siswa->perusahaan)
-                                    <span class="badge badge-success">{{ $penilaian->siswa->perusahaan->nama_perusahaan }}</span>
+                                    {{ $penilaian->siswa->perusahaan->nama_perusahaan }}
                                 @else
-                                    <span class="badge badge-warning">-</span>
+                                    <span style="color: var(--text-muted);">-</span>
                                 @endif
                             </td>
                             <td>
@@ -68,13 +68,16 @@
                             </td>
                             <td>{{ $penilaian->keaktifan }}</td>
                             <td>{{ $penilaian->sikap }}</td>
-                            <td style="display: flex; gap: 4px; flex-wrap: wrap;">
-                                <a href="{{ route('penilaian.show', $penilaian->id) }}" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.75rem;">Detail</a>
-                                <a href="{{ route('penilaian.edit', $penilaian->id) }}" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.75rem;">Edit</a>
-                                <form method="POST" action="{{ route('penilaian.destroy', $penilaian->id) }}" onsubmit="return confirm('Yakin hapus penilaian ini?')">
+                            <td style="display: flex; align-items: center; gap: 4px; white-space: nowrap;">
+                                <a href="{{ route('penilaian.show', $penilaian->id) }}" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2;">Detail</a>
+                                <a href="{{ route('penilaian.edit', $penilaian->id) }}" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2;">Edit</a>
+                                <form method="POST" action="{{ route('penilaian.destroy', $penilaian->id) }}" onsubmit="return confirm('Yakin hapus penilaian ini?')" style="display: inline-flex; align-items: center;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-delete">Hapus</button>
+                                    <button type="submit" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2; display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                        Hapus
+                                    </button>
                                 </form>
                             </td>
                         </tr>

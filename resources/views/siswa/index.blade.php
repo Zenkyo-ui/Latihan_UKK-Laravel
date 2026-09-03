@@ -44,27 +44,30 @@
                             <td data-kelas="{{ $siswa->kelas }}">{{ $siswa->kelas }}</td>
                             <td>
                                 @if ($siswa->perusahaan)
-                                    <span class="badge badge-success">{{ $siswa->perusahaan->nama_perusahaan }}</span>
+                                    {{ $siswa->perusahaan->nama_perusahaan }}
                                 @else
-                                    <span class="badge badge-warning">Belum ditugaskan</span>
+                                    <span style="color: var(--text-muted);">Belum ditugaskan</span>
                                 @endif
                             </td>
                             <td>
                                 @if ($siswa->kompetensi)
-                                    <span class="badge badge-success">{{ $siswa->kompetensi->nama_kompetensi }}</span>
+                                    {{ $siswa->kompetensi->nama_kompetensi }}
                                 @else
-                                    <span class="badge badge-warning">-</span>
+                                    <span style="color: var(--text-muted);">-</span>
                                 @endif
                             </td>
                             <td>{{ $siswa->tanggal_mulai_pkl }}</td>
                             <td>{{ $siswa->tanggal_selesai_pkl }}</td>
-                            <td style="display: flex; gap: 4px; flex-wrap: wrap;">
-                                <a href="{{ route('siswa.show', $siswa->nis) }}" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.75rem;">Detail</a>
-                                <a href="{{ route('siswa.edit', $siswa->nis) }}" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.75rem;">Edit</a>
-                                <form method="POST" action="{{ route('siswa.destroy', $siswa->nis) }}" onsubmit="return confirm('Yakin hapus siswa ini?')">
+                            <td style="display: flex; align-items: center; gap: 4px; white-space: nowrap;">
+                                <a href="{{ route('siswa.show', $siswa->nis) }}" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2;">Detail</a>
+                                <a href="{{ route('siswa.edit', $siswa->nis) }}" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2;">Edit</a>
+                                <form method="POST" action="{{ route('siswa.destroy', $siswa->nis) }}" onsubmit="return confirm('Yakin hapus siswa ini?')" style="display: inline-flex; align-items: center;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-delete">Hapus</button>
+                                    <button type="submit" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2; display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                        Hapus
+                                    </button>
                                 </form>
                             </td>
                         </tr>

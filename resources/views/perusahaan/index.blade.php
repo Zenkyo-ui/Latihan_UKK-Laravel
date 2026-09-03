@@ -49,18 +49,21 @@
                             <td>{{ $perusahaan->siswa_count }} / {{ $perusahaan->kuota }}</td>
                             <td>
                                 @if ($penuh)
-                                    <span class="badge badge-danger">Penuh</span>
+                                    <span style="color: var(--danger); font-weight: 600;">Penuh</span>
                                 @else
-                                    <span class="badge badge-success">{{ $sisa }}</span>
+                                    <span style="color: var(--success);">{{ $sisa }}</span>
                                 @endif
                             </td>
-                            <td style="display: flex; gap: 4px; flex-wrap: wrap;">
-                                <a href="{{ route('perusahaan.show', $perusahaan->id) }}" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.75rem;">Detail</a>
-                                <a href="{{ route('perusahaan.edit', $perusahaan->id) }}" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.75rem;">Edit</a>
-                                <form method="POST" action="{{ route('perusahaan.destroy', $perusahaan->id) }}" onsubmit="return confirm('Yakin hapus perusahaan ini?')">
+                            <td style="display: flex; align-items: center; gap: 4px; white-space: nowrap;">
+                                <a href="{{ route('perusahaan.show', $perusahaan->id) }}" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2;">Detail</a>
+                                <a href="{{ route('perusahaan.edit', $perusahaan->id) }}" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2;">Edit</a>
+                                <form method="POST" action="{{ route('perusahaan.destroy', $perusahaan->id) }}" onsubmit="return confirm('Yakin hapus perusahaan ini?')" style="display: inline-flex; align-items: center;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-delete">Hapus</button>
+                                    <button type="submit" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.75rem; line-height: 1.2; display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                        Hapus
+                                    </button>
                                 </form>
                             </td>
                         </tr>
